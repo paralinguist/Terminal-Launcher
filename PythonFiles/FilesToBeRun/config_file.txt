@@ -1,3 +1,0 @@
-Command Terminal Path: path\To\File.py
-Status Terminal Path: path\To\File.py
-Game Terminal Path: path\To\File.py
