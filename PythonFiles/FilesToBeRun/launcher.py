@@ -37,13 +37,16 @@ file = open(config_file_directory, "r")
 lines = file.readlines()
 pathArrays = []
 
+counter = 0
 for line in lines:
-    split = line.split(": ")
-    path = split[1]
-    path = path.replace("\n", "")
-    pathArrays.append(path)
-    print(pathArrays)
-    #would the last bit being a \n be a problem?
+    counter += 1
+    if counter != 1:
+        split = line.split(": ")
+        path = split[1]
+        path = path.replace("\n", "")
+        pathArrays.append(path)
+        print(pathArrays)
+        #would the last bit being a \n be a problem?
 
 file.close()
 
