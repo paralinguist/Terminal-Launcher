@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Main/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Main/GenericButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://fonts/EHSMB.TTF" type="DynamicFontData" id=3]
+[ext_resource path="res://Scenes/Main/FileDialog.tscn" type="PackedScene" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
@@ -55,16 +56,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 1, 1, 1, 0.117647 )
 
-[node name="FileDialog" type="FileDialog" parent="MainMenu/StartPopup/FileSystem"]
-visible = true
-margin_left = 256.0
-margin_top = 248.0
-margin_right = 1088.0
-margin_bottom = 712.0
-popup_exclusive = true
-window_title = "Open a Directory"
-mode = 2
-access = 2
+[node name="FileDialog" parent="MainMenu/StartPopup/FileSystem" instance=ExtResource( 4 )]
 
 [node name="TextBackground" type="ColorRect" parent="MainMenu/StartPopup/FileSystem"]
 margin_left = 256.0
@@ -77,8 +69,7 @@ color = Color( 0, 0, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 1 )
-text = "LOCATE and SELECT where the COMMAND terminal python file is located"
+text = "text"
 autowrap = true
 
 [connection signal="pressed" from="MainMenu/HBoxContainer/Start" to="." method="_on_Start_pressed"]
-[connection signal="dir_selected" from="MainMenu/StartPopup/FileSystem/FileDialog" to="." method="_on_FileDialog_dir_selected"]

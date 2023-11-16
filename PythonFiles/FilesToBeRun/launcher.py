@@ -40,7 +40,7 @@ pathArrays = []
 counter = 0
 for line in lines:
     counter += 1
-    if counter != 1:
+    if counter == 2 or counter == 3 or counter == 4:
         split = line.split(": ")
         path = split[1]
         path = path.replace("\n", "")

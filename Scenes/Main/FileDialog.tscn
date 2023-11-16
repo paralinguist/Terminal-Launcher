@@ -1,0 +1,12 @@
+[gd_scene format=2]
+
+[node name="FileDialog" type="FileDialog"]
+margin_left = 256.0
+margin_top = 248.0
+margin_right = 1088.0
+margin_bottom = 712.0
+popup_exclusive = true
+window_title = "Select folder location of python files"
+mode_overrides_title = false
+mode = 2
+access = 2
