@@ -7,25 +7,36 @@ var python_interpreter_path = ""
 var folder_directory = ""
 
 func _ready():
-	var result = false
-	var file = File.new()
-	file.open(CONFIG_FILE_LOCATION, File.READ)
 	
-	while not file.eof_reached():
-		var line = file.get_line()
-		var split = line.split(": ")
-		if split[0] == "Already_Config":
-			if split[1] == "0":
-				result = true
+	var file_for_check = File.new()
+	var check_if_exists = file_for_check.file_exists(CONFIG_FILE_LOCATION)
+	print(check_if_exists)
 	
-	file.close()
-	
-	if result == true:
-		_BringUpFileSelector("folder")
-	else:
-		$MainMenu/StartPopup.visible = false
+	if check_if_exists == true:
+		var result = false
+		var file = File.new()
+		file.open(CONFIG_FILE_LOCATION, File.READ)
+
+		while not file.eof_reached():
+			var line = file.get_line()
+			print(line)
+			var split = line.split(": ")
+			if split[0] == "Already_Config":
+				if "0" in split[1]:
+					print("not configed")
+					result = true
+
+		file.close()
+
+		if result == true:
+			_BringUpFileSelector("folder")
+		else:
+			$MainMenu/StartPopup.visible = false
 		
-	
+	else: 
+		_CreateConfigFile()
+		_ready()
+		
 func _BringUpFileSelector(type):
 	#for loop, 3 times, change text on time
 	#ask sir where game selection will be handled
@@ -67,6 +78,21 @@ func _ChangeConfigFile():
 	file.store_string("Game Terminal Path: " + str(directory) + str("/telnet_game.py")+"\n")
 	
 	file.store_string("Python interpreter Path: " + str(path))
+	
+	#Game Terminal Path: C:\Users\joshd\Desktop\CompSciProject\Terminal-Exploit\clients\telnet_game.py
+	
+	file.close()
+	
+func _CreateConfigFile():
+	var file = File.new()
+	file.open(CONFIG_FILE_LOCATION, File.WRITE)
+	
+	file.store_string("Already_Config: " + "0 \n")
+	file.store_string("Command Terminal Path: \n")
+	file.store_string("Status Terminal Path: \n")
+	file.store_string("Game Terminal Path: \n")
+	
+	file.store_string("Python interpreter Path: ")
 	
 	#Game Terminal Path: C:\Users\joshd\Desktop\CompSciProject\Terminal-Exploit\clients\telnet_game.py
 	
