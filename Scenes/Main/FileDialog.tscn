@@ -10,3 +10,4 @@ window_title = "Select folder location of python files"
 mode_overrides_title = false
 mode = 2
 access = 2
+show_hidden_files = true
