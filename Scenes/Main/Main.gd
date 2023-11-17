@@ -6,6 +6,7 @@ const STARTUP_POP = "res://Scenes/Main/FileDialog.tscn"
 var python_interpreter_path = ""
 var folder_directory = ""
 
+
 func _ready():
 	
 	var file_for_check = File.new()
@@ -41,8 +42,11 @@ func _BringUpFileSelector(type):
 	#for loop, 3 times, change text on time
 	#ask sir where game selection will be handled
 	#this is being disgusting rn so imma do folder method then figure out later
-	$MainMenu/StartPopup/FileSystem/FileDialog.visible = true
-
+	#$MainMenu/StartPopup/FileSystem/FileDialog.visible = true
+	
+	
+	#queue free after use!!!!
+	#weird thing where python interperter no open
 	
 	var new_file_dialog = load(STARTUP_POP)
 	var file_instance = new_file_dialog.instance()
@@ -140,18 +144,13 @@ func _on_Start_pressed():
 				IDLE_path = split[1]
 	file.close()
 	
-	
-	
-	
-	
-
 	OS.execute(IDLE_path, args, blocking, error)
 
 
 func _on_FileDialog_dir_selected(dir):
 	print("DOING A DIRECTORY")
 	print(dir)
-	$MainMenu/StartPopup.visible = false
+	#$MainMenu/StartPopup.visible = false
 	folder_directory = dir
 	_BringUpFileSelector("python files")
 	
