@@ -1,9 +1,9 @@
 addr:127.0.0.1
 port:9876
-user:plague
-team:green
+user:fire
+team:orange
 role:telnet
-head:42
+head:24
 status_width:70
 status_height:40
 game_width:98

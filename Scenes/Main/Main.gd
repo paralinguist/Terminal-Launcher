@@ -10,21 +10,23 @@ var game_terminals = []
 var status_terminal = "status.py"
 var command_terminal = "command.py"
 var game_terminal = ""
-var status_pid = 0
-var command_pid = 0
-var game_pid = 0
+var status_pid = []
+var command_pid = []
+var game_pid = []
+
+signal done_copying
 
 #what is this?
 var folder_directory = ""
 
 func _notification(notification_kind):
     if notification_kind == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-        if status_pid != 0:
-            OS.kill(status_pid)
-        if command_pid != 0:
-            OS.kill(command_pid)
-        if game_pid != 0:
-            OS.kill(game_pid)
+        for pid in status_pid:
+            OS.kill(pid)
+        for pid in command_pid:
+            OS.kill(pid)
+        for pid in game_pid:
+            OS.kill(pid)
         get_tree().quit()
 
 func set_os():
@@ -155,8 +157,6 @@ func _ChangeConfigFile():
     
     file.store_string("Python interpreter Path: " + str(path))
     
-    #Game Terminal Path: C:\Users\joshd\Desktop\CompSciProject\Terminal-Exploit\clients\telnet_game.py
-    
     file.close()
     
 func _CreateConfigFile():
@@ -170,16 +170,29 @@ func _CreateConfigFile():
     
     config_file.close()
 
+func copy_config(directory, target, destination):
+    directory.copy(target, destination)
+
 #launch the python files
 func _on_Start_pressed():
     var blocking = false
     var output = []
     var stderr = false
     var open_console = true
-    print(python_interpreter_path + " " + launcher_path + game_terminal)
-    status_pid = OS.execute(python_interpreter_path, [launcher_path + status_terminal], blocking, output, stderr, open_console)
-    command_pid = OS.execute(python_interpreter_path, [command_terminal], blocking, output, stderr, open_console)
-    game_pid = OS.execute(python_interpreter_path, [game_terminal], blocking, output, stderr, open_console)
+    if $MainMenu/HBoxContainer/TestingCheckBox.pressed:
+        var game_directory = Directory.new()
+        var original_config_file = "client_settings.txt"
+        if game_directory.open(".") == OK:
+            for i in range(1,5):
+                launcher_path = "./testbed/" + str(i) + "/"
+                print(launcher_path)
+                status_pid.append(OS.execute(python_interpreter_path, [launcher_path + status_terminal], blocking, output, stderr, open_console))
+                command_pid.append(OS.execute(python_interpreter_path, [launcher_path + command_terminal], blocking, output, stderr, open_console))
+                game_pid.append(OS.execute(python_interpreter_path, [launcher_path + game_terminal], blocking, output, stderr, open_console))
+    else:
+        status_pid.append(OS.execute(python_interpreter_path, [status_terminal], blocking, output, stderr, open_console))
+        command_pid.append(OS.execute(python_interpreter_path, [command_terminal], blocking, output, stderr, open_console))
+        game_pid.append(OS.execute(python_interpreter_path, [game_terminal], blocking, output, stderr, open_console))
 
 func _on_FileDialog_dir_selected(dir):
     print("DOING A DIRECTORY")
@@ -198,3 +211,7 @@ func _on_FileDialog_file_selected(path):
     #fix later
     $MainMenu/StartPopup/FileSystem/FileDialog.queue_free()
     $MainMenu/StartPopup.visible = false
+
+
+func _on_Node2D_done_copying():
+    print("yep, finished")

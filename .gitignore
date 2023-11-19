@@ -5,3 +5,7 @@ status.py
 terminal_api.py
 command.py
 PythonFiles/FilesToBeRun/config_file.txt.bak
+*.pyc
+*.pyc
+__pycache__/terminal_api.cpython-310.pyc
+*.bak

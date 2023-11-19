@@ -40,9 +40,15 @@ alignment = 1
 margin_bottom = 57.0
 
 [node name="SettingsButton" parent="MainMenu/HBoxContainer" instance=ExtResource( 2 )]
-margin_top = 212.0
-margin_bottom = 269.0
+margin_top = 190.0
+margin_bottom = 247.0
 text = "Settings"
+
+[node name="TestingCheckBox" type="CheckBox" parent="MainMenu/HBoxContainer"]
+margin_top = 381.0
+margin_right = 450.0
+margin_bottom = 405.0
+text = "Local testing - multi spawn"
 
 [node name="StartPopup" type="CanvasLayer" parent="MainMenu"]
 
@@ -74,4 +80,5 @@ custom_fonts/font = SubResource( 1 )
 text = "text"
 autowrap = true
 
+[connection signal="done_copying" from="." to="." method="_on_Node2D_done_copying"]
 [connection signal="pressed" from="MainMenu/HBoxContainer/StartButton" to="." method="_on_Start_pressed"]
