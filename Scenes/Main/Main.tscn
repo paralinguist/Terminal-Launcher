@@ -36,10 +36,10 @@ size_flags_vertical = 3
 custom_constants/separation = 20
 alignment = 1
 
-[node name="Start" parent="MainMenu/HBoxContainer" instance=ExtResource( 2 )]
+[node name="StartButton" parent="MainMenu/HBoxContainer" instance=ExtResource( 2 )]
 margin_bottom = 57.0
 
-[node name="Start2" parent="MainMenu/HBoxContainer" instance=ExtResource( 2 )]
+[node name="SettingsButton" parent="MainMenu/HBoxContainer" instance=ExtResource( 2 )]
 margin_top = 212.0
 margin_bottom = 269.0
 text = "Settings"
@@ -47,11 +47,13 @@ text = "Settings"
 [node name="StartPopup" type="CanvasLayer" parent="MainMenu"]
 
 [node name="FileSystem" type="Control" parent="MainMenu/StartPopup"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_pivot_offset = Vector2( -336, 160 )
 
 [node name="FilePopupBackground" type="ColorRect" parent="MainMenu/StartPopup/FileSystem"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 1, 1, 1, 0.117647 )
@@ -72,4 +74,4 @@ custom_fonts/font = SubResource( 1 )
 text = "text"
 autowrap = true
 
-[connection signal="pressed" from="MainMenu/HBoxContainer/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="MainMenu/HBoxContainer/StartButton" to="." method="_on_Start_pressed"]

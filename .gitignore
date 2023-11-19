@@ -1,2 +1,7 @@
 PythonFiles/FilesToBeRun/config_file.txt
 BraindumpTextFiles
+telnet_game.py
+status.py
+terminal_api.py
+command.py
+PythonFiles/FilesToBeRun/config_file.txt.bak

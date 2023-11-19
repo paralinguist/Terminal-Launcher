@@ -1,0 +1,2 @@
+interpreter:
+game_terminal:telnet_game.py
