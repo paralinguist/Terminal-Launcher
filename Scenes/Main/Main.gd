@@ -183,12 +183,12 @@ func _on_Start_pressed():
         var test_config_file = "client_settings.txt.test"        
         if game_directory.open(".") == OK:
             var file_copier = $BlockingFileCopier
-            file_copier.copy_config(game_directory, original_config_file,backup_config_file)
-            $CopyTimer.start(1)
+            file_copier.copy_config(game_directory, original_config_file, backup_config_file)
+            $CopyTimer.start(0.8)
             yield($CopyTimer, "timeout")
             for i in range(1,5):
                 file_copier.copy_config(game_directory, test_config_file + str(i), original_config_file)
-                $CopyTimer.start(1)
+                $CopyTimer.start(0.8)
                 yield($CopyTimer, "timeout")
                 status_pid.append(OS.execute(python_interpreter_path, [status_terminal], blocking, output, stderr, open_console))
                 command_pid.append(OS.execute(python_interpreter_path, [command_terminal], blocking, output, stderr, open_console))
