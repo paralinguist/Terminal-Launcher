@@ -1,0 +1,12 @@
+addr:127.0.0.1
+port:9876
+user:plague
+team:green
+role:telnet
+head:42
+status_width:70
+status_height:40
+game_width:98
+game_height:20
+command_width:98
+command_height:20

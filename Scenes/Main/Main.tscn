@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Main/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Main/GenericButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://fonts/EHSMB.TTF" type="DynamicFontData" id=3]
 [ext_resource path="res://Scenes/Main/FileDialog.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Main/BlockingFileCopier.gd" type="Script" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
@@ -80,5 +81,10 @@ custom_fonts/font = SubResource( 1 )
 text = "text"
 autowrap = true
 
-[connection signal="done_copying" from="." to="." method="_on_Node2D_done_copying"]
+[node name="BlockingFileCopier" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="CopyTimer" type="Timer" parent="."]
+
 [connection signal="pressed" from="MainMenu/HBoxContainer/StartButton" to="." method="_on_Start_pressed"]
+[connection signal="done_copying" from="BlockingFileCopier" to="." method="_on_BlockingFileCopier_done_copying"]

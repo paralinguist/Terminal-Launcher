@@ -14,7 +14,7 @@ var status_pid = []
 var command_pid = []
 var game_pid = []
 
-signal done_copying
+var wait_fs: GDScriptFunctionState
 
 #what is this?
 var folder_directory = ""
@@ -170,9 +170,6 @@ func _CreateConfigFile():
     
     config_file.close()
 
-func copy_config(directory, target, destination):
-    directory.copy(target, destination)
-
 #launch the python files
 func _on_Start_pressed():
     var blocking = false
@@ -182,13 +179,21 @@ func _on_Start_pressed():
     if $MainMenu/HBoxContainer/TestingCheckBox.pressed:
         var game_directory = Directory.new()
         var original_config_file = "client_settings.txt"
+        var backup_config_file = "client_settings.txt.bak"
+        var test_config_file = "client_settings.txt.test"        
         if game_directory.open(".") == OK:
+            var file_copier = $BlockingFileCopier
+            file_copier.copy_config(game_directory, original_config_file,backup_config_file)
+            $CopyTimer.start(1)
+            yield($CopyTimer, "timeout")
             for i in range(1,5):
-                launcher_path = "./testbed/" + str(i) + "/"
-                print(launcher_path)
-                status_pid.append(OS.execute(python_interpreter_path, [launcher_path + status_terminal], blocking, output, stderr, open_console))
-                command_pid.append(OS.execute(python_interpreter_path, [launcher_path + command_terminal], blocking, output, stderr, open_console))
-                game_pid.append(OS.execute(python_interpreter_path, [launcher_path + game_terminal], blocking, output, stderr, open_console))
+                file_copier.copy_config(game_directory, test_config_file + str(i), original_config_file)
+                $CopyTimer.start(1)
+                yield($CopyTimer, "timeout")
+                status_pid.append(OS.execute(python_interpreter_path, [status_terminal], blocking, output, stderr, open_console))
+                command_pid.append(OS.execute(python_interpreter_path, [command_terminal], blocking, output, stderr, open_console))
+                game_pid.append(OS.execute(python_interpreter_path, [game_terminal], blocking, output, stderr, open_console))
+            game_directory.copy(backup_config_file, original_config_file)
     else:
         status_pid.append(OS.execute(python_interpreter_path, [status_terminal], blocking, output, stderr, open_console))
         command_pid.append(OS.execute(python_interpreter_path, [command_terminal], blocking, output, stderr, open_console))
@@ -213,5 +218,8 @@ func _on_FileDialog_file_selected(path):
     $MainMenu/StartPopup.visible = false
 
 
-func _on_Node2D_done_copying():
-    print("yep, finished")
+
+func _on_BlockingFileCopier_done_copying():
+    print("Finished copy job")
+    if is_instance_valid(wait_fs):
+        wait_fs.resume()
