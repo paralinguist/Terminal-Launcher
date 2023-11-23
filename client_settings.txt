@@ -1,9 +1,9 @@
 addr:localhost
 port:9876
-user:plague
+user:virus
 team:green
 role:telnet
-head:42
+head:20
 status_width:70
 status_height:40
 game_width:98

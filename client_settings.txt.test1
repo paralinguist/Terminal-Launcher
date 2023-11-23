@@ -1,6 +1,6 @@
-addr:10.202.179.200
+addr:localhost
 port:9876
-user:plague
+user:virus
 team:green
 role:telnet
 head:42

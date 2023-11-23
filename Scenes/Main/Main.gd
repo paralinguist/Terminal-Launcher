@@ -13,6 +13,8 @@ var game_terminal = ""
 var status_pid = []
 var command_pid = []
 var game_pid = []
+var copy_command = "xcopy"
+var copy_args = "/Y"
 
 var wait_fs: GDScriptFunctionState
 
@@ -94,6 +96,8 @@ func check_interpreter():
             OS.execute("where", args, true, output)
             interpreter = output[0].replace("\\", "/").strip_edges()
         else:
+            copy_command = "cp"
+            copy_args = ""
             python_interpreter_path = "python3"
             args = [python_interpreter_path] 
             OS.execute("which", args, true, output)
@@ -193,17 +197,14 @@ func _on_Start_pressed():
         var backup_config_file = "client_settings.txt.bak"
         var test_config_file = "client_settings.txt.test"        
         if game_directory.open(".") == OK:
-            var file_copier = $BlockingFileCopier
-            file_copier.copy_config(game_directory, original_config_file, backup_config_file)
-            $CopyTimer.start(0.8)
-            yield($CopyTimer, "timeout")
+            game_directory.copy(original_config_file, backup_config_file)
             for i in range(1,5):
-                file_copier.copy_config(game_directory, test_config_file + str(i), original_config_file)
-                $CopyTimer.start(0.8)
-                yield($CopyTimer, "timeout")
+                game_directory.copy(test_config_file+str(i), original_config_file)
                 status_pid.append(OS.execute(python_interpreter_path, [status_terminal], blocking, output, stderr, open_console))
                 command_pid.append(OS.execute(python_interpreter_path, [command_terminal], blocking, output, stderr, open_console))
                 game_pid.append(OS.execute(python_interpreter_path, [game_terminal], blocking, output, stderr, open_console))
+                $CopyTimer.start(1)
+                yield($CopyTimer, "timeout")
             game_directory.copy(backup_config_file, original_config_file)
     else:
         status_pid.append(OS.execute(python_interpreter_path, [status_terminal], blocking, output, stderr, open_console))
