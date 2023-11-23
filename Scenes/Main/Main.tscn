@@ -66,6 +66,7 @@ anchor_bottom = 1.0
 color = Color( 1, 1, 1, 0.117647 )
 
 [node name="FileDialog" parent="MainMenu/StartPopup/FileSystem" instance=ExtResource( 4 )]
+rect_min_size = Vector2( 400, 140 )
 
 [node name="TextBackground" type="ColorRect" parent="MainMenu/StartPopup/FileSystem"]
 margin_left = 256.0

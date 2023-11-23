@@ -85,23 +85,33 @@ func read_config():
 #OS Specific code please
 func check_interpreter():
     if python_interpreter_path == "":
-        python_interpreter_path = "py.exe"
-    var args = [python_interpreter_path]
-    var output = []
-    OS.execute("where", args, true, output)
-    var interpreter = output[0].replace("\\", "/").strip_edges()
-    var interpreter_check = File.new()
-    if not interpreter_check.file_exists(interpreter):
-        var new_file_dialog = load(STARTUP_POP)
-        var file_instance = new_file_dialog.instance()
-        $MainMenu/StartPopup/FileSystem.add_child(file_instance)
-        file_instance.popup()
-        $MainMenu/StartPopup.visible = true
-        file_instance.connect("file_selected", self, "_on_FileDialog_file_selected")
-        $MainMenu/StartPopup/FileSystem/TextBackground/Label.text = "Locate a python interpreter path. It should be py.exe"
-        file_instance.mode = FileDialog.MODE_OPEN_FILE
-        file_instance.window_title = "Select file location"
-
+        var args
+        var output = []
+        var interpreter
+        if operating_system == "Windows":
+            python_interpreter_path = "py.exe"
+            args = [python_interpreter_path] 
+            OS.execute("where", args, true, output)
+            interpreter = output[0].replace("\\", "/").strip_edges()
+        else:
+            python_interpreter_path = "python3"
+            args = [python_interpreter_path] 
+            OS.execute("which", args, true, output)
+            interpreter = output[0]
+               
+        var interpreter_check = File.new()
+        if not interpreter_check.file_exists(interpreter):
+                var new_file_dialog = load(STARTUP_POP)
+                var file_instance = new_file_dialog.instance()
+                $MainMenu/StartPopup/FileSystem.add_child(file_instance)
+                file_instance.popup()
+                $MainMenu/StartPopup.visible = true
+                file_instance.connect("file_selected", self, "_on_FileDialog_file_selected")
+                $MainMenu/StartPopup/FileSystem/TextBackground/Label.text = "Locate a python interpreter path. It should be py.exe"
+                file_instance.mode = FileDialog.MODE_OPEN_FILE
+                file_instance.window_title = "Select file location - Python"
+    print(python_interpreter_path)
+    
 func check_game_terminal():
     if not (game_terminal in game_terminals):
         print("Available game terms: " + str(game_terminals))
@@ -109,6 +119,7 @@ func check_game_terminal():
         #Display a dialogue asking for user to select game terminal
 
 func _ready():
+    operating_system = OS.get_name()
     read_config()
     check_terminals()
     check_interpreter()
