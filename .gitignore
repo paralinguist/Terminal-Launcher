@@ -11,3 +11,5 @@ __pycache__/terminal_api.cpython-310.pyc
 *.bak
 launcher_config.txt
 launcher_config.txt
+*.bat
+*.pyc
