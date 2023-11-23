@@ -1,5 +1,2 @@
-Already_Config: 0
-Command Terminal Path: path\To\File.py
-Status Terminal Path: path\To\File.py
-Game Terminal Path: path\To\File.py
-Python interpreter Path: path\To\pythonw.exe
+interpreter:/Library/Frameworks/Python.framework/Versions/3.9/bin/python3
+game_terminal:telnet_game.py

@@ -9,3 +9,5 @@ PythonFiles/FilesToBeRun/config_file.txt.bak
 *.pyc
 __pycache__/terminal_api.cpython-310.pyc
 *.bak
+launcher_config.txt
+launcher_config.txt
