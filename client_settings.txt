@@ -1,4 +1,4 @@
-addr:localhost
+addr:10.202.178.182
 port:9876
 user:virus
 team:green

@@ -1,13 +1,24 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Main/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Main/GenericButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://fonts/EHSMB.TTF" type="DynamicFontData" id=3]
 [ext_resource path="res://Scenes/Main/FileDialog.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Main/BlockingFileCopier.gd" type="Script" id=5]
+[ext_resource path="res://Themes/goodperson.tres" type="DynamicFont" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 44
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 101
+outline_size = 4
+use_filter = true
 font_data = ExtResource( 3 )
 
 [node name="Node2D" type="Node2D"]
@@ -82,10 +93,113 @@ custom_fonts/font = SubResource( 1 )
 text = "text"
 autowrap = true
 
+[node name="HBox" type="HBoxContainer" parent="MainMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="Panel" parent="MainMenu/HBox"]
+margin_right = 1400.0
+margin_bottom = 900.0
+rect_pivot_offset = Vector2( -1, 1 )
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="MainMenu/HBox/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Main title" type="Label" parent="MainMenu/HBox/Panel/VBox"]
+margin_right = 1400.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 2 )
+text = "TERMINAL EXPLOIT"
+align = 1
+autowrap = true
+
+[node name="Some other title" type="Label" parent="MainMenu/HBox/Panel/VBox"]
+margin_top = 50.0
+margin_right = 1400.0
+margin_bottom = 154.0
+custom_colors/font_color = Color( 0.752941, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+text = "0 SECONDS TILL CRASH"
+align = 1
+
+[node name="MessageLog" type="TextEdit" parent="MainMenu/HBox/Panel/VBox"]
+margin_top = 158.0
+margin_right = 1400.0
+margin_bottom = 900.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 6 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/HBox/Panel/VBox/MessageLog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+
+[node name="Label" type="Label" parent="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer"]
+margin_right = 1380.0
+margin_bottom = 20.0
+custom_fonts/font = ExtResource( 6 )
+text = "Console data:"
+
+[node name="Start" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer"]
+margin_top = 24.0
+margin_right = 1380.0
+margin_bottom = 50.0
+custom_colors/font_color_focus = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color_pressed = Color( 0.831373, 0.505882, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "> Launch the Game"
+flat = true
+align = 0
+
+[node name="Settings" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer"]
+margin_top = 54.0
+margin_right = 1380.0
+margin_bottom = 80.0
+custom_colors/font_color_focus = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color_pressed = Color( 0.831373, 0.505882, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "> Settings"
+flat = true
+align = 0
+
+[node name="TestingCheckBox" type="CheckBox" parent="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer"]
+margin_top = 84.0
+margin_right = 1380.0
+margin_bottom = 112.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0.831373, 0.505882, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "Local testing - multi spawn"
+
+[node name="Quit" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer"]
+margin_top = 116.0
+margin_right = 1380.0
+margin_bottom = 142.0
+custom_colors/font_color_focus = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color_pressed = Color( 0.831373, 0.505882, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "> Quit the Game"
+flat = true
+align = 0
+
 [node name="BlockingFileCopier" type="Node" parent="."]
 script = ExtResource( 5 )
 
 [node name="CopyTimer" type="Timer" parent="."]
 
 [connection signal="pressed" from="MainMenu/HBoxContainer/StartButton" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer/Start" to="." method="_on_Start_pressed"]
 [connection signal="done_copying" from="BlockingFileCopier" to="." method="_on_BlockingFileCopier_done_copying"]
