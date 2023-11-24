@@ -1,4 +1,4 @@
-addr:10.202.178.182
+addr:127.0.0.1
 port:9876
 user:virus
 team:green

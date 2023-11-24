@@ -21,7 +21,7 @@ outline_size = 4
 use_filter = true
 font_data = ExtResource( 3 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Launcher" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="MainMenu" type="CanvasLayer" parent="."]
@@ -191,7 +191,7 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 0.0784314, 0.670588, 0.0117647, 1 )
 custom_colors/font_color_pressed = Color( 0.831373, 0.505882, 0, 1 )
 custom_fonts/font = ExtResource( 6 )
-text = "> Quit the Game"
+text = "> Quit T:E Launcher"
 flat = true
 align = 0
 
@@ -202,4 +202,5 @@ script = ExtResource( 5 )
 
 [connection signal="pressed" from="MainMenu/HBoxContainer/StartButton" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="done_copying" from="BlockingFileCopier" to="." method="_on_BlockingFileCopier_done_copying"]
