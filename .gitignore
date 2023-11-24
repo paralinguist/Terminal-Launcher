@@ -13,3 +13,4 @@ launcher_config.txt
 launcher_config.txt
 *.bat
 *.pyc
+__pycache__/terminal_api.cpython-310.pyc
