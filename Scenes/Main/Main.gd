@@ -49,7 +49,7 @@ func check_terminals():
     #path if exported
     else:
         var directory = OS.get_executable_path().get_base_dir()
-        launcher_path = directory
+        launcher_path = directory + "/"
     var file_check = File.new()
     if file_check.file_exists(status_terminal) and file_check.file_exists(command_terminal):
         var launcher_directory = Directory.new()
@@ -194,6 +194,9 @@ func _CreateConfigFile():
     
     config_file.close()
 
+func copy_script(directory, script, target_path):
+    directory.copy(script, target_path + script)
+
 #launch the python files
 func _on_Start_pressed():
     
@@ -212,16 +215,21 @@ func _on_Start_pressed():
             var original_config_file = "client_settings.txt"
             var backup_config_file = "client_settings.txt.bak"
             var test_config_file = "client_settings.txt.test"        
+            var multilaunch_path = ""
             if game_directory.open(".") == OK:
-                game_directory.copy(original_config_file, backup_config_file)
                 for i in range(1,5):
-                    game_directory.copy(test_config_file+str(i), original_config_file)
-                    status_pid.append(OS.execute(python_interpreter_path, [status_terminal], blocking, output, stderr, open_console))
-                    command_pid.append(OS.execute(python_interpreter_path, [command_terminal], blocking, output, stderr, open_console))
-                    game_pid.append(OS.execute(python_interpreter_path, [game_terminal], blocking, output, stderr, open_console))
-                    $CopyTimer.start(1)
-                    yield($CopyTimer, "timeout")
-                game_directory.copy(backup_config_file, original_config_file)
+                    #TODO: support other game terminals
+                    multilaunch_path = launcher_path + "multilaunch/" + str(i) + "/"
+                    copy_script(game_directory, "status.py", multilaunch_path)
+                    copy_script(game_directory, "command.py", multilaunch_path)
+                    copy_script(game_directory, "terminal_api.py", multilaunch_path)
+                    copy_script(game_directory, "telnet_game.py", multilaunch_path)
+                    status_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + status_terminal], blocking, output, stderr, open_console))
+                    command_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + command_terminal], blocking, output, stderr, open_console))
+                    game_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + game_terminal], blocking, output, stderr, open_console))
+                    #$CopyTimer.start(1)
+                    #yield($CopyTimer, "timeout")
+                #game_directory.copy(backup_config_file, original_config_file)
         else:
             status_pid.append(OS.execute(python_interpreter_path, [status_terminal], blocking, output, stderr, open_console))
             command_pid.append(OS.execute(python_interpreter_path, [command_terminal], blocking, output, stderr, open_console))
