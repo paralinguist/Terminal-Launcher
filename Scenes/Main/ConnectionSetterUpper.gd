@@ -46,12 +46,15 @@ func _on_data() -> void:
 	
 	var splitted_incomming = incoming.split(":")
 	
+	print(splitted_incomming)
+	
+	
 	
 	match splitted_incomming[0]:
 		"test":
-			if splitted_incomming[1] == true and\
-			splitted_incomming[2] == true and\
-			splitted_incomming[3] < 4:
+			if splitted_incomming[1] == "True" and\
+			splitted_incomming[2] == "True" and\
+			splitted_incomming[3] < "4":
 				get_parent().allowed_to_start = true
 				get_parent()._on_Start_pressed()
 			else:
@@ -59,11 +62,11 @@ func _on_data() -> void:
 				var what_needs_to_be_done = ""
 				#send_terminal_message(connection_id, "test:" + str(game_available) + ":" + str(name_available) + ":" + str(team_size))
 				
-				if splitted_incomming[1] == false:
+				if splitted_incomming[1] == "False":
 					what_needs_to_be_done = "A game is currently happening."
-				if splitted_incomming[2] == false:
+				if splitted_incomming[2] == "False":
 					what_needs_to_be_done = "Change your name! "
-				if splitted_incomming[3] >= 4:
+				if splitted_incomming[3] >= "4":
 					what_needs_to_be_done = "Change your team! "
 				#_changing_start_back_to_normal(text)
 				
@@ -103,7 +106,7 @@ func _sending_test():
 	packet_to_send += line_by_line["team"] + ":" + line_by_line["user"]
 	print(packet_to_send)
 	
-	client.get_peer(1).put_packet("test:orange:harold".to_utf8())
+	client.get_peer(1).put_packet(packet_to_send.to_utf8())
 
 func _sending_points(points):
 	var message = "score:%s" % points
