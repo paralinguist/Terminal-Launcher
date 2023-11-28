@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Themes/goodperson.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scenes/TestingPopup/Node2D.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.172549, 0.164706, 0.196078, 1 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="MenuButton" type="MenuButton" parent="."]
+margin_right = 448.0
+margin_bottom = 144.0
+
+[node name="PopupMenu2" type="PopupMenu" parent="MenuButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 1 )
+custom_styles/panel = SubResource( 1 )
+items = [ "TESTY", null, 0, false, false, 0, 0, null, "", false, "RUBBY DUCK ETHAN", null, 0, false, false, 1, 0, null, "", false, "POGGERS", null, 0, false, false, 2, 0, null, "", false ]
+
+[connection signal="id_pressed" from="MenuButton/PopupMenu2" to="." method="_on_PopupMenu2_id_pressed"]

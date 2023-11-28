@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/Main/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Main/GenericButton.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/Main/FileDialog.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Main/BlockingFileCopier.gd" type="Script" id=5]
 [ext_resource path="res://Themes/goodperson.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Scenes/Main/PopupUpOfGames.gd" type="Script" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
@@ -34,7 +35,8 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="HBoxContainer" type="VBoxContainer" parent="MainMenu"]
+[node name="OLDHBOX" type="VBoxContainer" parent="MainMenu"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -48,15 +50,15 @@ size_flags_vertical = 3
 custom_constants/separation = 20
 alignment = 1
 
-[node name="StartButton" parent="MainMenu/HBoxContainer" instance=ExtResource( 2 )]
+[node name="StartButton" parent="MainMenu/OLDHBOX" instance=ExtResource( 2 )]
 margin_bottom = 57.0
 
-[node name="SettingsButton" parent="MainMenu/HBoxContainer" instance=ExtResource( 2 )]
+[node name="SettingsButton" parent="MainMenu/OLDHBOX" instance=ExtResource( 2 )]
 margin_top = 190.0
 margin_bottom = 247.0
 text = "Settings"
 
-[node name="TestingCheckBox" type="CheckBox" parent="MainMenu/HBoxContainer"]
+[node name="TestingCheckBox" type="CheckBox" parent="MainMenu/OLDHBOX"]
 margin_top = 381.0
 margin_right = 450.0
 margin_bottom = 405.0
@@ -133,7 +135,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 6 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/HBox/Panel/VBox/MessageLog"]
+[node name="MainVBOX" type="VBoxContainer" parent="MainMenu/HBox/Panel/VBox/MessageLog"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -141,13 +144,13 @@ margin_top = 10.0
 margin_right = -10.0
 margin_bottom = -10.0
 
-[node name="Label" type="Label" parent="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer"]
+[node name="Label" type="Label" parent="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX"]
 margin_right = 1380.0
 margin_bottom = 20.0
 custom_fonts/font = ExtResource( 6 )
 text = "Console data:"
 
-[node name="Start" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer"]
+[node name="Start" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX"]
 margin_top = 24.0
 margin_right = 1380.0
 margin_bottom = 50.0
@@ -160,7 +163,7 @@ text = "> Launch the Game"
 flat = true
 align = 0
 
-[node name="Settings" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer"]
+[node name="Settings" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX"]
 margin_top = 54.0
 margin_right = 1380.0
 margin_bottom = 80.0
@@ -173,7 +176,7 @@ text = "> Settings"
 flat = true
 align = 0
 
-[node name="TestingCheckBox" type="CheckBox" parent="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer"]
+[node name="TestingCheckBox" type="CheckBox" parent="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX"]
 margin_top = 84.0
 margin_right = 1380.0
 margin_bottom = 112.0
@@ -182,7 +185,7 @@ custom_colors/font_color_pressed = Color( 0.831373, 0.505882, 0, 1 )
 custom_fonts/font = ExtResource( 6 )
 text = "Local testing - multi spawn"
 
-[node name="Quit" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer"]
+[node name="Quit" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX"]
 margin_top = 116.0
 margin_right = 1380.0
 margin_bottom = 142.0
@@ -195,12 +198,129 @@ text = "> Quit T:E Launcher"
 flat = true
 align = 0
 
+[node name="SettingsVBOX" type="VBoxContainer" parent="MainMenu/HBox/Panel/VBox/MessageLog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+script = ExtResource( 7 )
+
+[node name="Label" type="Label" parent="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX"]
+margin_right = 1380.0
+margin_bottom = 20.0
+custom_fonts/font = ExtResource( 6 )
+text = "Console data:"
+
+[node name="Name" type="LineEdit" parent="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX"]
+margin_top = 24.0
+margin_right = 1380.0
+margin_bottom = 54.0
+custom_fonts/font = ExtResource( 6 )
+text = "> Name : "
+
+[node name="ChangeIP" type="LineEdit" parent="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX"]
+margin_top = 58.0
+margin_right = 1380.0
+margin_bottom = 88.0
+custom_fonts/font = ExtResource( 6 )
+text = "> IP Change : "
+
+[node name="Change Role" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX"]
+margin_top = 92.0
+margin_right = 1380.0
+margin_bottom = 118.0
+custom_colors/font_color_focus = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color_pressed = Color( 0.831373, 0.505882, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "> Change role"
+flat = true
+align = 0
+
+[node name="CurrentRole" type="Label" parent="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX"]
+margin_top = 122.0
+margin_right = 1380.0
+margin_bottom = 142.0
+custom_fonts/font = ExtResource( 6 )
+text = "Current Role : "
+
+[node name="Change Team" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX"]
+margin_top = 146.0
+margin_right = 1380.0
+margin_bottom = 172.0
+custom_colors/font_color_focus = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color_pressed = Color( 0.831373, 0.505882, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "> Change Team"
+flat = true
+align = 0
+
+[node name="CurrentTeam" type="Label" parent="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX"]
+margin_top = 176.0
+margin_right = 1380.0
+margin_bottom = 196.0
+custom_fonts/font = ExtResource( 6 )
+text = "Current Team : "
+
+[node name="Save" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX"]
+margin_top = 200.0
+margin_right = 1380.0
+margin_bottom = 226.0
+custom_colors/font_color_focus = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color_pressed = Color( 0.831373, 0.505882, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "> Save details"
+flat = true
+align = 0
+
+[node name="Return" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX"]
+margin_top = 230.0
+margin_right = 1380.0
+margin_bottom = 256.0
+custom_colors/font_color_focus = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.0784314, 0.670588, 0.0117647, 1 )
+custom_colors/font_color_pressed = Color( 0.831373, 0.505882, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "> Quit T:E Launcher"
+flat = true
+align = 0
+
+[node name="Control" type="Node2D" parent="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX"]
+
+[node name="MenuButton" type="MenuButton" parent="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 486.0
+margin_top = -32.0
+margin_right = 678.0
+margin_bottom = 288.0
+
+[node name="PopupUpOfGames" type="PopupMenu" parent="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Control/MenuButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
 [node name="BlockingFileCopier" type="Node" parent="."]
 script = ExtResource( 5 )
 
 [node name="CopyTimer" type="Timer" parent="."]
 
-[connection signal="pressed" from="MainMenu/HBoxContainer/StartButton" to="." method="_on_Start_pressed"]
-[connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer/Start" to="." method="_on_Start_pressed"]
-[connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="MainMenu/OLDHBOX/StartButton" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="text_changed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Name" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_Name_text_changed"]
+[connection signal="text_changed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/ChangeIP" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_ChangeIP_text_changed"]
+[connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Change Role" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_Change_Role_pressed"]
+[connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Change Team" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_Change_Team_pressed"]
+[connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Save" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_Save_pressed"]
+[connection signal="id_pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Control/MenuButton/PopupUpOfGames" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_PopupUpOfGames_id_pressed"]
 [connection signal="done_copying" from="BlockingFileCopier" to="." method="_on_BlockingFileCopier_done_copying"]
