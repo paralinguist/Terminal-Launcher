@@ -136,7 +136,6 @@ size_flags_vertical = 3
 custom_fonts/font = ExtResource( 6 )
 
 [node name="MainVBOX" type="VBoxContainer" parent="MainMenu/HBox/Panel/VBox/MessageLog"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -199,6 +198,7 @@ flat = true
 align = 0
 
 [node name="SettingsVBOX" type="VBoxContainer" parent="MainMenu/HBox/Panel/VBox/MessageLog"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -289,7 +289,7 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 0.0784314, 0.670588, 0.0117647, 1 )
 custom_colors/font_color_pressed = Color( 0.831373, 0.505882, 0, 1 )
 custom_fonts/font = ExtResource( 6 )
-text = "> Quit T:E Launcher"
+text = "> Return to Main Screen - MAKE SURE TO SAVE DETAILS FIRST"
 flat = true
 align = 0
 
@@ -316,11 +316,13 @@ script = ExtResource( 5 )
 
 [connection signal="pressed" from="MainMenu/OLDHBOX/StartButton" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/Settings" to="." method="_on_Settings_pressed"]
 [connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="text_changed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Name" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_Name_text_changed"]
 [connection signal="text_changed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/ChangeIP" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_ChangeIP_text_changed"]
 [connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Change Role" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_Change_Role_pressed"]
 [connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Change Team" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_Change_Team_pressed"]
 [connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Save" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_Save_pressed"]
+[connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Return" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_Return_pressed"]
 [connection signal="id_pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Control/MenuButton/PopupUpOfGames" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_PopupUpOfGames_id_pressed"]
 [connection signal="done_copying" from="BlockingFileCopier" to="." method="_on_BlockingFileCopier_done_copying"]

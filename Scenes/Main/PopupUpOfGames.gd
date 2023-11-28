@@ -154,3 +154,8 @@ func _on_Save_pressed():
 	
 	change_config_file.close()
 	
+
+
+func _on_Return_pressed():
+	self.visible = false
+	get_parent().get_node("MainVBOX").visible = true

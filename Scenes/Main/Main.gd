@@ -288,3 +288,8 @@ func _on_BlockingFileCopier_done_copying():
 func _on_Quit_pressed():
 	kill_terminals()
 	get_tree().quit()
+
+
+func _on_Settings_pressed():
+	$MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX.visible = false
+	$MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX.visible = true
