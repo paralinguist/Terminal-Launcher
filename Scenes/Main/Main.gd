@@ -19,13 +19,11 @@ var copy_args = "/Y"
 
 var wait_fs: GDScriptFunctionState
 
+var allowed_to_start = false
+
 #what is this?
 #i dont even have a clue but the code complains without it
 var folder_directory = ""
-
-
-
-
 
 
 #check if a PID is still running, then go
@@ -208,55 +206,62 @@ func copy_script(directory, script, target_path):
 #launch the python files
 func _on_Start_pressed():
 	
-	var node_for_start_button = $MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/Start
-	
-	if node_for_start_button.text == BUTTON_TEXTS[0]:
+	if allowed_to_start == true:
+		var node_for_start_button = $MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/Start
 		
-		
-		
-		node_for_start_button.text = BUTTON_TEXTS[1]
-		var blocking = false
-		var output = []
-		var stderr = false
-		var open_console = true
-		
-	#	if $MainMenu/HBoxContainer/TestingCheckBox.pressed:
-		if $MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/TestingCheckBox.pressed:
-			var game_directory = Directory.new()
-			var original_config_file = "client_settings.txt"
-			var backup_config_file = "client_settings.txt.bak"
-			var test_config_file = "client_settings.txt.test"        
-			var multilaunch_path = ""
-			if game_directory.open(".") == OK:
-				for i in range(1,5):
-					#TODO: support other game terminals
-					multilaunch_path = launcher_path + "multilaunch/" + str(i) + "/"
-					copy_script(game_directory, "status.py", multilaunch_path)
-					copy_script(game_directory, "command.py", multilaunch_path)
-					copy_script(game_directory, "terminal_api.py", multilaunch_path)
-					copy_script(game_directory, "telnet_game.py", multilaunch_path)
-					status_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + status_terminal], blocking, output, stderr, open_console))
-					command_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + command_terminal], blocking, output, stderr, open_console))
-					game_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + game_terminal], blocking, output, stderr, open_console))
-					#$CopyTimer.start(1)
-					#yield($CopyTimer, "timeout")
-				#game_directory.copy(backup_config_file, original_config_file)
+		if node_for_start_button.text == BUTTON_TEXTS[0]:
+			
+			
+			
+			node_for_start_button.text = BUTTON_TEXTS[1]
+			var blocking = false
+			var output = []
+			var stderr = false
+			var open_console = true
+			
+		#	if $MainMenu/HBoxContainer/TestingCheckBox.pressed:
+			if $MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/TestingCheckBox.pressed:
+				var game_directory = Directory.new()
+				var original_config_file = "client_settings.txt"
+				var backup_config_file = "client_settings.txt.bak"
+				var test_config_file = "client_settings.txt.test"        
+				var multilaunch_path = ""
+				if game_directory.open(".") == OK:
+					for i in range(1,5):
+						#TODO: support other game terminals
+						multilaunch_path = launcher_path + "multilaunch/" + str(i) + "/"
+						copy_script(game_directory, "status.py", multilaunch_path)
+						copy_script(game_directory, "command.py", multilaunch_path)
+						copy_script(game_directory, "terminal_api.py", multilaunch_path)
+						copy_script(game_directory, "telnet_game.py", multilaunch_path)
+						status_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + status_terminal], blocking, output, stderr, open_console))
+						command_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + command_terminal], blocking, output, stderr, open_console))
+						game_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + game_terminal], blocking, output, stderr, open_console))
+						#$CopyTimer.start(1)
+						#yield($CopyTimer, "timeout")
+					#game_directory.copy(backup_config_file, original_config_file)
+			else:
+				status_pid.append(OS.execute(python_interpreter_path, [status_terminal], blocking, output, stderr, open_console))
+				command_pid.append(OS.execute(python_interpreter_path, [command_terminal], blocking, output, stderr, open_console))
+				game_pid.append(OS.execute(python_interpreter_path, [game_terminal], blocking, output, stderr, open_console))
+			
 		else:
-			status_pid.append(OS.execute(python_interpreter_path, [status_terminal], blocking, output, stderr, open_console))
-			command_pid.append(OS.execute(python_interpreter_path, [command_terminal], blocking, output, stderr, open_console))
-			game_pid.append(OS.execute(python_interpreter_path, [game_terminal], blocking, output, stderr, open_console))
-		
+			#means node_for_Start_button.text is [1]
+			for pid in status_pid:
+				OS.kill(pid)
+			for pid in command_pid:
+				OS.kill(pid)
+			for pid in game_pid:
+				OS.kill(pid)
+			node_for_start_button.text = BUTTON_TEXTS[0]
 	else:
-		#means node_for_Start_button.text is [1]
-		for pid in status_pid:
-			OS.kill(pid)
-		for pid in command_pid:
-			OS.kill(pid)
-		for pid in game_pid:
-			OS.kill(pid)
-		node_for_start_button.text = BUTTON_TEXTS[0]
-		
-
+		var get_connection = $ConnectionSetterUpper._checking_if_connected_to_host() 
+		print(get_connection)
+		if get_connection == true:
+			$ConnectionSetterUpper._sending_test()
+			
+		else:
+			pass
 
 
 func _on_FileDialog_dir_selected(dir):
@@ -277,7 +282,8 @@ func _on_FileDialog_file_selected(path):
 	$MainMenu/StartPopup/FileSystem/FileDialog.queue_free()
 	$MainMenu/StartPopup.visible = false
 
-
+func _changing_start_back_to_normal(text):
+	$MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/Start.text = "> Test connection and launch game"
 
 func _on_BlockingFileCopier_done_copying():
 	print("Finished copy job")

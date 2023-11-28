@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/Main/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Main/GenericButton.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/Main/BlockingFileCopier.gd" type="Script" id=5]
 [ext_resource path="res://Themes/goodperson.tres" type="DynamicFont" id=6]
 [ext_resource path="res://Scenes/Main/PopupUpOfGames.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/Main/ConnectionSetterUpper.gd" type="Script" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
@@ -158,7 +159,7 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 0.0784314, 0.670588, 0.0117647, 1 )
 custom_colors/font_color_pressed = Color( 0.831373, 0.505882, 0, 1 )
 custom_fonts/font = ExtResource( 6 )
-text = "> Launch the Game"
+text = "> Test connection and launch game"
 flat = true
 align = 0
 
@@ -313,6 +314,9 @@ anchor_bottom = 1.0
 script = ExtResource( 5 )
 
 [node name="CopyTimer" type="Timer" parent="."]
+
+[node name="ConnectionSetterUpper" type="Node" parent="."]
+script = ExtResource( 8 )
 
 [connection signal="pressed" from="MainMenu/OLDHBOX/StartButton" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/Start" to="." method="_on_Start_pressed"]
