@@ -118,3 +118,11 @@ custom_fonts/font = ExtResource( 2 )
 text = "> Quit the Game"
 flat = true
 align = 0
+
+[node name="Label2" type="Label" parent="CanvasLayer/HBox/Panel/VBox/MessageLog/VBoxContainer"]
+margin_top = 146.0
+margin_right = 1380.0
+margin_bottom = 212.0
+custom_fonts/font = ExtResource( 2 )
+text = "DISCLAIMER! NOW YOU ACTUALLY NEED TO HAVE A SERVER RUNNING AND BE ABLE TO CONNECT TO IT FOR THE GAME TO ACTUALLY LAUNCH BUT IT WILL ONLY TELL YOU IN THE OUTPUT IF IT CAN'T CONNECT THROUGH A VERY LUCAS VAGUE STRING OF  \"False\""
+autowrap = true
