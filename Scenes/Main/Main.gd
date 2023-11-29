@@ -251,25 +251,20 @@ func _on_Start_pressed():
             
         #	if $MainMenu/HBoxContainer/TestingCheckBox.pressed:
             if $MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/TestingCheckBox.pressed:
-                var game_directory = Directory.new()
-                var original_config_file = "client_settings.txt"
-                var backup_config_file = "client_settings.txt.bak"
-                var test_config_file = "client_settings.txt.test"        
+                var game_directory = Directory.new()   
                 var multilaunch_path = ""
                 if game_directory.open(".") == OK:
                     for i in range(1,5):
                         #TODO: support other game terminals
-                        multilaunch_path = launcher_path + "multilaunch/" + str(i) + "/"
+                        print("Yo! " + status_terminal)
+                        multilaunch_path = launcher_path + "/multilaunch/" + str(i) + "/"
                         copy_script(game_directory, "status.py", multilaunch_path)
                         copy_script(game_directory, "command.py", multilaunch_path)
                         copy_script(game_directory, "terminal_api.py", multilaunch_path)
                         copy_script(game_directory, "telnet_game.py", multilaunch_path)
-                        status_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + status_terminal], blocking, output, stderr, open_console))
-                        command_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + command_terminal], blocking, output, stderr, open_console))
-                        game_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + game_terminal], blocking, output, stderr, open_console))
-                        #$CopyTimer.start(1)
-                        #yield($CopyTimer, "timeout")
-                    #game_directory.copy(backup_config_file, original_config_file)
+                        status_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + "status.py"], blocking, output, stderr, open_console))
+                        command_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + "command.py"], blocking, output, stderr, open_console))
+                        game_pid.append(OS.execute(python_interpreter_path, [multilaunch_path + "tenet_game.py"], blocking, output, stderr, open_console))
             else:
                 status_pid.append(OS.execute(python_interpreter_path, [status_terminal], blocking, output, stderr, open_console))
                 command_pid.append(OS.execute(python_interpreter_path, [command_terminal], blocking, output, stderr, open_console))
