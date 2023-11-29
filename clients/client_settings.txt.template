@@ -1,9 +1,9 @@
-addr:10.202.179.58
-port:9876
-user:joshara
-team:orange
+user:playername
+team:green
 role:telnet
-head:20
+addr:127.0.0.1
+port:9876
+head:1
 status_width:70
 status_height:40
 game_width:98

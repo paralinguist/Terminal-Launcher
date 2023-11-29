@@ -1,2 +1,3 @@
-telnett:telnet_game.py
-rando:will_it_breaki.py
+telnet:telnet_game.py
+SMTP:smtp_game.py
+ftp:ftp_game.py

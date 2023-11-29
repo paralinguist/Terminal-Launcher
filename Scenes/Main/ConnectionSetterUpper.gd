@@ -8,13 +8,41 @@ var URL: String = "ws://localhost:%s" % PORT
 
 var server_id
 
+
+func _creating_url():
+	var ip = ""
+	var port = ""
+	var client_settings_location = "res://clients/client_settings.txt"
+	
+	var client_file = File.new()
+	client_file.open(client_settings_location, File.READ)
+	
+	#var contents = role_file.get_as_text()
+	#print(contents)
+	while not client_file.eof_reached():
+		var line = client_file.get_line()
+		var split = line.split(":")
+		print(line)
+		print(split)
+		if split[0] == "addr":
+			ip = split[-1]
+		if split[0] == "port":
+			port = split[-1]
+		#name:extension
+		
+	client_file.close()
+	var url = "w://" + str(ip) + ":" + str(port)
+	return url
+ 
 func _ready() -> void:
-	client.connect_to_url(URL)
+	print("connections")
 	client.connect("connection_closed", self, "_closed")
 	client.connect("connection_error", self, "_closed")
 	client.connect("connection_established", self, "_connected")
 	client.connect("data_received", self, "_on_data")
-
+	var url_if_not_local = _creating_url()
+	client.connect_to_url(URL)
+	#addr+port
 	
 		#come back to later
 	
@@ -63,19 +91,23 @@ func _on_data() -> void:
 				#send_terminal_message(connection_id, "test:" + str(game_available) + ":" + str(name_available) + ":" + str(team_size))
 				
 				if splitted_incomming[1] == "False":
-					what_needs_to_be_done = "A game is currently happening."
+					what_needs_to_be_done += "A game is currently happening."
 				if splitted_incomming[2] == "False":
-					what_needs_to_be_done = "Change your name! "
+					what_needs_to_be_done += "Change your name! "
 				if splitted_incomming[3] >= "4":
-					what_needs_to_be_done = "Change your team! "
+					what_needs_to_be_done += "Change your team! "
 				#_changing_start_back_to_normal(text)
 				
+				get_parent().get_node("MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/Start").text = what_needs_to_be_done
 				var timer = Timer.new()
 				timer.autostart = false
 				timer.one_shot = true
-				timer.wait_time = 5
+				timer.wait_time = 3
+				
 				timer.connect("timeout", get_parent(), "_changing_start_back_to_normal")
+				print("timeout")
 				get_parent().add_child(timer)
+				timer.start()
 				
 				
 
@@ -88,7 +120,7 @@ func _sending_test():
 	var packet_to_send = "test:"
 	
 	var line_by_line = {}
-	var config_file_location = "res://client_settings.txt"
+	var config_file_location = "res://clients/client_settings.txt"
 	
 	var config_file = File.new()
 	config_file.open(config_file_location, File.READ)

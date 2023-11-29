@@ -18,6 +18,7 @@ var base_team_text = "Current Team : "
 var base_role_text = "Current Role : "
 
 func _ready():
+	print("popups")
 	#res://RoleandExtensions.txt
 	grab_potential_roles()
 	upload_to_popup()
@@ -40,7 +41,10 @@ func grab_potential_roles():
 		print(split)
 		#name:extension
 		arrayOfRoles[split[0]] = split[-1]
+	
+	#var roles_array = arrayOfRoles
 	role_file.close()
+	#return roles_array
 
 func upload_to_popup():
 	var keys = arrayOfRoles.keys()
@@ -50,7 +54,7 @@ func upload_to_popup():
 
 func grab_specific_file_stats():
 	var line_by_line = {}
-	var config_file_location = "res://client_settings.txt"
+	var config_file_location = "res://clients/client_settings.txt"
 	
 	var config_file = File.new()
 	config_file.open(config_file_location, File.READ)
@@ -82,6 +86,7 @@ func _on_Change_Role_pressed():
 
 
 func _on_Change_Team_pressed():
+	print(chosen_stats["team"])
 	if chosen_stats["team"] == "orange":
 		chosen_stats["team"] = "green"
 	else:
@@ -110,7 +115,7 @@ func _on_ChangeIP_text_changed(new_text):
 func _on_Save_pressed():
 	#var original_config_file = "client_settings.txt"
 	var line_by_line = {}
-	var config_file_location = "res://client_settings.txt"
+	var config_file_location = "res://clients/client_settings.txt"
 	
 	var config_file = File.new()
 	config_file.open(config_file_location, File.READ)
@@ -136,6 +141,8 @@ func _on_Save_pressed():
 	
 	if it_split[-1] != "":
 		line_by_line["addr"] = str(it_split[-1])
+	
+	line_by_line["team"] = chosen_stats["team"]
 	
 	print(line_by_line)
 	
