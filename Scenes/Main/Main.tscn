@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/Main/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Main/GenericButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://fonts/EHSMB.TTF" type="DynamicFontData" id=3]
 [ext_resource path="res://Scenes/Main/FileDialog.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Main/BlockingFileCopier.gd" type="Script" id=5]
 [ext_resource path="res://Themes/goodperson.tres" type="DynamicFont" id=6]
 [ext_resource path="res://Scenes/Main/PopupUpOfGames.gd" type="Script" id=7]
 [ext_resource path="res://Scenes/Main/ConnectionSetterUpper.gd" type="Script" id=8]
@@ -310,11 +309,6 @@ margin_bottom = 288.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="BlockingFileCopier" type="Node" parent="."]
-script = ExtResource( 5 )
-
-[node name="CopyTimer" type="Timer" parent="."]
-
 [node name="ConnectionSetterUpper" type="Node" parent="."]
 script = ExtResource( 8 )
 
@@ -329,4 +323,3 @@ script = ExtResource( 8 )
 [connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Save" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_Save_pressed"]
 [connection signal="pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Return" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_Return_pressed"]
 [connection signal="id_pressed" from="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX/Control/MenuButton/PopupUpOfGames" to="MainMenu/HBox/Panel/VBox/MessageLog/SettingsVBOX" method="_on_PopupUpOfGames_id_pressed"]
-[connection signal="done_copying" from="BlockingFileCopier" to="." method="_on_BlockingFileCopier_done_copying"]
