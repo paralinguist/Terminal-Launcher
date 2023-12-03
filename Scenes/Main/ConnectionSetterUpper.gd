@@ -47,17 +47,20 @@ func _creating_url():
 func _ready() -> void:
 	print("connections")
 	client.connect("connection_closed", self, "_closed")
-	client.connect("connection_error", self, "_closed")
+	client.connect("connection_error", self, "connection_error")
 	client.connect("connection_established", self, "_connected")
 	client.connect("data_received", self, "_on_data")
 	var url_if_not_local = _creating_url()
-	client.connect_to_url(URL)
+	var err = client.connect_to_url(url_if_not_local)
+	print("error " + str(err))
 	#addr+port
 	
 		#come back to later
 	
 	#add connection 
-	
+func connection_error():
+	print("nope")
+
 func _closed():
 	print("closed")
 
@@ -65,6 +68,7 @@ func _closed():
 #this creates more risky code
 #the void returns a void if the protocol isnt a string
 func _connected(protocol: String) -> void:
+	print('correctly connected')
 	var message = "test:green:clarence:"
 	var packet: PoolByteArray = message.to_utf8()
 	client.get_peer(1).put_packet(packet)

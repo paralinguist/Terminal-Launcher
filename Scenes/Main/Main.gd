@@ -238,6 +238,7 @@ func copy_script(directory, script, target_path):
 
 #launch the python files
 func _on_Start_pressed():
+	print("Start has been pressed")
 	
 	if allowed_to_start == true:
 		var node_for_start_button = $MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/Start
@@ -272,8 +273,15 @@ func _on_Start_pressed():
 				if testing_tcp_udp == false:
 					print("GAME TERMINAL")
 					print(game_terminal)
-					game_pid.append(OS.execute(python_interpreter_path, [game_terminal], blocking, output, stderr, open_console))
-			
+					var extension = game_terminal.get_extension()
+					
+					if extension == "py":
+						game_pid.append(OS.execute(python_interpreter_path, [game_terminal], blocking, output, stderr, open_console))
+					else:
+						print("EXE")
+						print(game_terminal)
+						game_pid.append(OS.execute(game_terminal, [], blocking, output))
+						print(output)
 		else:
 			#means node_for_Start_button.text is [1]
 			for pid in status_pid:
@@ -285,7 +293,7 @@ func _on_Start_pressed():
 			node_for_start_button.text = BUTTON_TEXTS[0]
 	else:
 		var get_connection = $ConnectionSetterUpper._checking_if_connected_to_host() 
-		print(get_connection)
+		print("connection status: " + str(get_connection))
 		if get_connection == true:
 			$ConnectionSetterUpper._sending_test()
 			
