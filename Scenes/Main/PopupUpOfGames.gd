@@ -51,7 +51,8 @@ func grab_potential_roles():
 		print(line)
 		print(split)
 		#name:extension
-		arrayOfRoles[split[0]] = split[-1]
+		if split[0] != "" and split[0] != " ":
+			arrayOfRoles[split[0]] = split[-1]
 	
 	#var roles_array = arrayOfRoles
 	role_file.close()
@@ -107,8 +108,11 @@ func _on_Change_Team_pressed():
 
 func _on_PopupUpOfGames_id_pressed(id):
 	var chosen_role = $Control/MenuButton/PopupUpOfGames.get_item_text(id)
-	chosen_stats["role"] = chosen_role
-	$CurrentRole.text = base_role_text + chosen_stats["role"]
+	print(" POP UP")
+	print(arrayOfRoles)
+	if chosen_role in arrayOfRoles:
+		chosen_stats["role"] = chosen_role
+		$CurrentRole.text = base_role_text + chosen_stats["role"]
 
 
 func _on_Name_text_changed(new_text):

@@ -29,6 +29,7 @@ func _notification(notification_kind):
 	if notification_kind == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
 		kill_terminals()
 		get_tree().quit()
+		_changing_start_back_to_normal()
 
 #I considered called this "kill_children" but thought better of it
 func kill_terminals():
@@ -284,22 +285,25 @@ func _on_Start_pressed():
 						print(output)
 		else:
 			#means node_for_Start_button.text is [1]
-			for pid in status_pid:
-				OS.kill(pid)
-			for pid in command_pid:
-				OS.kill(pid)
-			for pid in game_pid:
-				OS.kill(pid)
+			kill_terminals()
+			_changing_start_back_to_normal()
 			node_for_start_button.text = BUTTON_TEXTS[0]
 	else:
 		var get_connection = $ConnectionSetterUpper._checking_if_connected_to_host() 
 		print("connection status: " + str(get_connection))
 		if get_connection == true:
 			$ConnectionSetterUpper._sending_test()
-			
 		else:
-			pass
-
+			$MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX/Start.text = "> Can't connect to server. Change IP or ensure Server is running"
+			var timer = Timer.new()
+			timer.autostart = false
+			timer.one_shot = true
+			timer.wait_time = 3
+			
+			timer.connect("timeout", self, "_changing_start_back_to_normal")
+			print("timeout")
+			get_parent().add_child(timer)
+			timer.start()
 
 func _on_FileDialog_dir_selected(dir):
 	print("DOING A DIRECTORY")

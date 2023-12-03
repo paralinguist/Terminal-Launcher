@@ -59,6 +59,7 @@ margin_bottom = 247.0
 text = "Settings"
 
 [node name="TestingCheckBox" type="CheckBox" parent="MainMenu/OLDHBOX"]
+visible = false
 margin_top = 381.0
 margin_right = 450.0
 margin_bottom = 405.0
@@ -176,6 +177,7 @@ flat = true
 align = 0
 
 [node name="TestingCheckBox" type="CheckBox" parent="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX"]
+visible = false
 margin_top = 84.0
 margin_right = 1380.0
 margin_bottom = 112.0
@@ -185,9 +187,9 @@ custom_fonts/font = ExtResource( 6 )
 text = "Local testing - multi spawn"
 
 [node name="Quit" type="Button" parent="MainMenu/HBox/Panel/VBox/MessageLog/MainVBOX"]
-margin_top = 116.0
+margin_top = 84.0
 margin_right = 1380.0
-margin_bottom = 142.0
+margin_bottom = 110.0
 custom_colors/font_color_focus = Color( 0.0784314, 0.670588, 0.0117647, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 0.0784314, 0.670588, 0.0117647, 1 )

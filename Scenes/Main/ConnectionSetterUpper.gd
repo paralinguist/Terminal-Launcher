@@ -96,7 +96,7 @@ func _on_data() -> void:
 				get_parent()._on_Start_pressed()
 			else:
 				#do if statement and change start button text accordinglt
-				var what_needs_to_be_done = ""
+				var what_needs_to_be_done = "> "
 				#send_terminal_message(connection_id, "test:" + str(game_available) + ":" + str(name_available) + ":" + str(team_size))
 				
 				if splitted_incomming[1] == "False":
