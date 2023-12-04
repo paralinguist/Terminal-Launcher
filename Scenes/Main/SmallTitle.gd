@@ -19,6 +19,9 @@ var next_text = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	pass
+	
+func _later():
 	var len_of_titles = len(potentials)
 	var ran_text = potentials[0]
 	current_length = len(ran_text)

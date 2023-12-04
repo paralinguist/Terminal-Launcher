@@ -132,6 +132,7 @@ percent_visible = 0.909091
 script = ExtResource( 5 )
 
 [node name="BigT" type="Timer" parent="MainMenu/HBox/Panel/VBox/SmallTitle"]
+wait_time = 4.0
 
 [node name="SmallT" type="Timer" parent="MainMenu/HBox/Panel/VBox/SmallTitle"]
 wait_time = 0.1
