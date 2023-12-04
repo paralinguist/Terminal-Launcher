@@ -31,14 +31,32 @@ func _ready():
 			client_directory.copy("./clients/client_settings.txt.template", "./clients/client_settings.txt")
 			config_file_location = "./clients/client_settings.txt"
 	print("popups")
-	#res://RoleandExtensions.txt
 	grab_potential_roles()
 	upload_to_popup()
 	grab_specific_file_stats()
 	updated_the_text()
 
+func _change_res_to_good(res_path):
+	print("function")
+	print(res_path)
+	var favoured_path = ""
+	
+	if (OS.has_feature("standalone")) == false:
+		 favoured_path = ProjectSettings.globalize_path(res_path)
+	#path if exported
+	else:
+		favoured_path = OS.get_executable_path().get_base_dir()
+	
+	print(favoured_path)
+	return favoured_path
+
 func grab_potential_roles():
 	var role_location = "res://RoleandExtensions.txt"
+	var new_role_location = _change_res_to_good(role_location)
+	role_location = new_role_location
+	
+	if (OS.has_feature("standalone")) == true:
+		role_location += "/RoleandExtensions.txt"
 	
 	var role_file = File.new()
 	role_file.open(role_location, File.READ)
@@ -48,8 +66,8 @@ func grab_potential_roles():
 	while not role_file.eof_reached():
 		var line = role_file.get_line()
 		var split = line.split(":")
-		print(line)
-		print(split)
+		#print(line)
+		#print(split)
 		#name:extension
 		if split[0] != "" and split[0] != " ":
 			arrayOfRoles[split[0]] = split[-1]
@@ -96,7 +114,7 @@ func _on_Change_Role_pressed():
 
 
 func _on_Change_Team_pressed():
-	print(chosen_stats["team"])
+	#print(chosen_stats["team"])
 	if chosen_stats["team"] == "orange":
 		chosen_stats["team"] = "green"
 	else:
@@ -172,6 +190,7 @@ func _on_Save_pressed():
 			change_config_file.store_line(stored_line)
 	
 	change_config_file.close()
+	grab_specific_file_stats()
 	
 
 

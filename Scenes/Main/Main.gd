@@ -1,7 +1,7 @@
 extends Node2D
 
-const CONFIG_FILE = "res://clients/launcher_config.txt"
-const STARTUP_POP = "res://Scenes/Main/FileDialog.tscn"
+var CONFIG_FILE = "res://clients/launcher_config.txt"
+var STARTUP_POP = "res://Scenes/Main/FileDialog.tscn"
 const BUTTON_TEXTS = ["> Launch the game", "> Disconnect from the game"]
 
 var operating_system = "Windows"
@@ -45,16 +45,31 @@ func kill_terminals():
 func set_os():
 	operating_system = OS.get_name()
 
+func _change_res_to_good(res_path):
+	print("FUNCTION")
+	print(res_path)
+	var favoured_path = ""
+	
+	if (OS.has_feature("standalone")) == false:
+		 favoured_path = ProjectSettings.globalize_path(res_path)
+	#path if exported
+	else:
+		favoured_path = OS.get_executable_path().get_base_dir()
+	
+	print(favoured_path)
+	return favoured_path
+
 func check_terminals():
 	var terminals_present = false
 	#path if in the godot editor
+	
+	var directory = _change_res_to_good("res://clients")
+
 	if (OS.has_feature("standalone")) == false:
-		launcher_path = ProjectSettings.globalize_path("res://clients")
-	#path if exported
+		launcher_path = directory
 	else:
-		var directory = OS.get_executable_path().get_base_dir()
-		
 		launcher_path = directory + "/clients/" 
+	
 	var file_check = File.new()
 	if file_check.file_exists(status_terminal) and file_check.file_exists(command_terminal):
 		var launcher_directory = Directory.new()
@@ -150,8 +165,8 @@ func grab_game_term_from_client_settings():
 	while not client_file.eof_reached():
 		var line = client_file.get_line()
 		var split = line.split(":")
-		print(line)
-		print(split)
+		#print(line)
+		#print(split)
 		if split[0] == "role":
 			role = split[-1]
 		
@@ -170,6 +185,13 @@ func grab_game_term_from_client_settings():
 
 func _ready():
 	operating_system = OS.get_name()
+	
+	var new_config = _change_res_to_good(CONFIG_FILE)
+	CONFIG_FILE = new_config
+	
+	if (OS.has_feature("standalone")) == true:
+		CONFIG_FILE += "/launcher_config.txt"
+	
 	print("beg")
 	read_config()
 	print("Read")

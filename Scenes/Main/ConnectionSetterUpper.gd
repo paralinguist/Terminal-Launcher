@@ -32,8 +32,8 @@ func _creating_url():
 	while not client_file.eof_reached():
 		var line = client_file.get_line()
 		var split = line.split(":")
-		print(line)
-		print(split)
+		#print(line)
+		#print(split)
 		if split[0] == "addr":
 			ip = split[-1]
 		if split[0] == "port":
@@ -134,18 +134,38 @@ func _checking_if_connected_to_host():
 	
 	return is_it_connected
 
+func _change_res_to_good(res_path):
+	print("FUNCTION")
+	print(res_path)
+	var favoured_path = ""
+	
+	if (OS.has_feature("standalone")) == false:
+		favoured_path = ProjectSettings.globalize_path(res_path)
+	#path if exported
+	else:
+		favoured_path = OS.get_executable_path().get_base_dir()
+		
+	
+	print(favoured_path)
+	return favoured_path
+
 func _sending_test():
 	
 	var packet_to_send = "test:"
 	
 	var line_by_line = {}
 	var config_file_location = "res://clients/client_settings.txt"
+	var new_cf_location = _change_res_to_good(config_file_location)
+	config_file_location = new_cf_location
 	
 	var config_file = File.new()
 	config_file.open(config_file_location, File.READ)
 	
 	#var contents = role_file.get_as_text()
 	#print(contents)
+	var get_as_text = config_file.get_as_text()
+	print(get_as_text)
+	
 	while not config_file.eof_reached():
 		var line = config_file.get_line()
 		var split = line.split(":")

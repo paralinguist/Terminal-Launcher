@@ -61,7 +61,7 @@ func _on_BigT_timeout():
 
 
 func _on_SmallT_timeout():
-	print("Small")
+	#print("Small")
 	if self.text != next_text:
 		visible_characters -= 1
 		if visible_characters <= 0:
