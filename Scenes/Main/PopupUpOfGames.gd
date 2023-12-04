@@ -42,10 +42,14 @@ func _change_res_to_good(res_path):
 	var favoured_path = ""
 	
 	if (OS.has_feature("standalone")) == false:
-		 favoured_path = ProjectSettings.globalize_path(res_path)
+		favoured_path = ProjectSettings.globalize_path(res_path)
 	#path if exported
 	else:
 		favoured_path = OS.get_executable_path().get_base_dir()
+		var text = res_path
+		var new = res_path.replace("res://","")
+		favoured_path += "/" + new
+		
 	
 	print(favoured_path)
 	return favoured_path
@@ -55,8 +59,8 @@ func grab_potential_roles():
 	var new_role_location = _change_res_to_good(role_location)
 	role_location = new_role_location
 	
-	if (OS.has_feature("standalone")) == true:
-		role_location += "/RoleandExtensions.txt"
+#	if (OS.has_feature("standalone")) == true:
+#		role_location += "/RoleandExtensions.txt"
 	
 	var role_file = File.new()
 	role_file.open(role_location, File.READ)

@@ -51,10 +51,13 @@ func _change_res_to_good(res_path):
 	var favoured_path = ""
 	
 	if (OS.has_feature("standalone")) == false:
-		 favoured_path = ProjectSettings.globalize_path(res_path)
+		favoured_path = ProjectSettings.globalize_path(res_path)
 	#path if exported
 	else:
 		favoured_path = OS.get_executable_path().get_base_dir()
+		var text = res_path
+		var new = res_path.replace("res://","")
+		favoured_path += "/" + new
 	
 	print(favoured_path)
 	return favoured_path
@@ -65,11 +68,12 @@ func check_terminals():
 	
 	var directory = _change_res_to_good("res://clients")
 
-	if (OS.has_feature("standalone")) == false:
-		launcher_path = directory
-	else:
-		launcher_path = directory + "/clients/" 
+#	if (OS.has_feature("standalone")) == false:
+#		launcher_path = directory
+#	else:
+#		launcher_path = directory + "/clients/" 
 	
+	launcher_path = directory
 	var file_check = File.new()
 	if file_check.file_exists(status_terminal) and file_check.file_exists(command_terminal):
 		var launcher_directory = Directory.new()
@@ -189,8 +193,8 @@ func _ready():
 	var new_config = _change_res_to_good(CONFIG_FILE)
 	CONFIG_FILE = new_config
 	
-	if (OS.has_feature("standalone")) == true:
-		CONFIG_FILE += "/launcher_config.txt"
+#	if (OS.has_feature("standalone")) == true:
+#		CONFIG_FILE += "/launcher_config.txt"
 	
 	print("beg")
 	read_config()

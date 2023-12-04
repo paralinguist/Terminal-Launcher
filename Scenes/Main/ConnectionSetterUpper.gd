@@ -144,6 +144,9 @@ func _change_res_to_good(res_path):
 	#path if exported
 	else:
 		favoured_path = OS.get_executable_path().get_base_dir()
+		var text = res_path
+		var new = res_path.replace("res://","")
+		favoured_path += "/" + new
 		
 	
 	print(favoured_path)
