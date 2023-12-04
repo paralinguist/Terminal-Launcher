@@ -30,11 +30,13 @@ var next_text = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	_later()
 	
 func _later():
 	var len_of_titles = len(potentials)
-	var ran_text = potentials[0]
+	print("LEN OF TITLES")
+	print(len_of_titles)
+	var ran_text = potentials[rng.randi_range(0,(len_of_titles-1))]
 	current_length = len(ran_text)
 	visible_characters = current_length
 	self.text = ran_text
