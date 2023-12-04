@@ -41,7 +41,7 @@ func _creating_url():
 		#name:extension
 		
 	client_file.close()
-	var url = "w://" + str(ip) + ":" + str(port)
+	var url = "ws://" + str(ip) + ":" + str(port)
 	return url
 	
 func _ready() -> void:
@@ -50,14 +50,21 @@ func _ready() -> void:
 	client.connect("connection_error", self, "connection_error")
 	client.connect("connection_established", self, "_connected")
 	client.connect("data_received", self, "_on_data")
-	var url_if_not_local = _creating_url()
-	var err = client.connect_to_url(url_if_not_local)
-	print("error " + str(err))
+	connecting_to_the_thing()
+	
 	#addr+port
 	
 		#come back to later
 	
 	#add connection 
+	
+
+func connecting_to_the_thing():
+	var url_if_not_local = _creating_url()
+	var err = client.connect_to_url(url_if_not_local)
+	print("error " + str(err))
+
+
 func connection_error():
 	print("nope")
 
@@ -122,10 +129,13 @@ func _on_data() -> void:
 
 func _checking_if_connected_to_host():
 	var is_it_connected = client.get_peer(1).is_connected_to_host()
+	if is_it_connected == false:
+		connecting_to_the_thing()
 	
 	return is_it_connected
 
 func _sending_test():
+	
 	var packet_to_send = "test:"
 	
 	var line_by_line = {}
